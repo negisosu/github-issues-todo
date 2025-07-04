@@ -1,15 +1,20 @@
 
 import { signIn } from "@/auth"
- 
+import { Button } from "./ui/button"
+
 export default function SignIn() {
   return (
     <form
       action={async () => {
         "use server"
-        await signIn("github")
+        await signIn("github", {
+          redirectTo: "/dashboard"
+        })
       }}
     >
-      <button type="submit">Signin with GitHub</button>
+      <Button variant="outline" type="submit" className="flex items-center gap-2 bg-transparent">
+        GitHubでログイン
+      </Button>
     </form>
   )
-} 
+}

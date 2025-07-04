@@ -1,12 +1,9 @@
-import SignIn from "@/components/SignIn";
-import SignOut from "@/components/SignOut";
+import { Login } from "@/components/Login";
 
 export default function Page() {
     return(
         <div>
-            <SignIn/>
-            <SignOut/>
-            login
+            <Login/>
         </div>
     )
 }

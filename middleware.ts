@@ -33,5 +33,5 @@ export default auth(async (req: NextRequest) => {
 
 // matcherで特定のパスにのみミドルウェアを適用
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: ["/dashboard/:path*", "/dashboard"],
 };
