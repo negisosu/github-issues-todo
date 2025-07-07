@@ -1,9 +1,9 @@
-import { Login } from "@/components/Login";
+import { Onboarding } from "@/components/Onboarding";
 
 export default function Page() {
     return(
         <div>
-            <Login/>
+            <Onboarding/>
         </div>
     )
 }

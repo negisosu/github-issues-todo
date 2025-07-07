@@ -1,18 +1,12 @@
-import { auth } from "@/auth";
-import SignIn from "@/components/SignIn";
-import SignOut from "@/components/SignOut";
+import { LPContents } from "@/components/landing/LPContents";
+import { LPFooter } from "@/components/landing/LPFooter";
 
 export default async function Home() {
 
-  const session = await auth()
-
-  console.log(session)
-
   return (
-    <div>
-      <SignIn/>
-      <SignOut/>
-      page
+    <div className="flex flex-col min-h-screen">
+      <LPContents/>
+      <LPFooter/>
     </div>
   );
 }
