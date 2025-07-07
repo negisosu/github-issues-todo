@@ -4,12 +4,16 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
     const body = await req.json()
     const id = String(body.id)
+    const name = String(body.name)
 
     try{
         // userの取得
         const user = await prisma.user.findUnique({
             where: {
-                githubId: id
+                githubName_githubId: {
+                    githubId: id,
+                    githubName: name
+                }
             }
         })
 

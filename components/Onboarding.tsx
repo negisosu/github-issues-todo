@@ -1,20 +1,27 @@
-import { getIssues, getReposPrivate } from "@/lib/actions"
+import { getReposPrivate } from "@/lib/actions"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
+import { OnboardingInputs } from "./OnboardingInputs"
+
 
 export async function Onboarding() {
 
     const repos = await getReposPrivate()
-    console.log(repos)
-
-    const issues = await getIssues("profile")
-    console.log(issues)
 
     return(
-        <div>
-            onboarding
-            {repos.map(async (repo) => {
-                return <div key={repo.id}>
-                </div>
-            })}
+        <div className="w-full min-h-screen flex items-center justify-center bg-muted/50">
+            <Card className="w-full max-w-md mx-2">
+                <CardHeader>
+                    <CardTitle>
+                        TODOを作成
+                    </CardTitle>
+                    <CardDescription>
+                        TODOリストを作成するリポジトリを選んでみましょう！
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <OnboardingInputs repos={repos}/>
+                </CardContent>
+            </Card>
         </div>
     )
 }

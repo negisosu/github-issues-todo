@@ -14,17 +14,25 @@ datasource db {
 }
 
 model User {
-  githubId String @id
+  githubId String
   githubName String
-  githubEmail String
 
-  issuesTodo IssuesTodo[]
+  @@id([githubName, githubId])
+
+  todoIssues TodoIssue[]
 }
 
-model IssuesTodo {
-  issuesId String @id
-  repoId String
+model TodoIssue {
+  owner String
+  repo String
+  issuesNumber Int
+
+  @@id([owner, repo, issuesNumber])
+
+  userName String
   userId String
 
-  user User @relation(fields: [userId], references: [githubId])
+  user User @relation(references: [githubId, githubName], fields: [userId, userName])
+  
 }
+

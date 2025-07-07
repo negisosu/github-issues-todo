@@ -6,6 +6,8 @@ export default auth(async (req: NextRequest) => {
   // セッション情報を取得
   const session = await auth();
 
+  console.log(session)
+
   // 未認証のユーザーはログインページにリダイレクト
   if (!session) {
     console.log("ユーザーは未認証です。ログインページにリダイレクトします。");
@@ -15,7 +17,7 @@ export default auth(async (req: NextRequest) => {
   //　ユーザーがこのサービスに登録しているかを確認するAPI
   const res = await fetch("http://localhost:3001/api/user/registered", {
     method: "POST",
-    body: JSON.stringify({ id: session.user?.id })
+    body: JSON.stringify({ id: session.user?.id, name: session.user?.name })
   })
   const data = await res.json()
 

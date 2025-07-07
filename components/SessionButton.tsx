@@ -6,8 +6,6 @@ export async function SessionButton() {
 
     const session = await auth()
 
-    console.log(session)
-
     return(
         <div>
             {session
