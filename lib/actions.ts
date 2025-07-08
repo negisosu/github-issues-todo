@@ -137,3 +137,20 @@ export async function createIssue(prevState: createIssueState, formData: FormDat
     // dashboardにリダイレクト
     redirect("/dashboard")
 }
+
+export async function getTodoIssueOwnerRepo(owner: string, repo: string) {
+    try{
+        const issue = await prisma.todoIssue.findUnique({
+            where: {
+                owner_repo: {
+                    owner: owner,
+                    repo: repo
+                }
+            }
+        })
+        return issue
+    }catch(e){
+        console.error(e)
+        throw e
+    }
+}
