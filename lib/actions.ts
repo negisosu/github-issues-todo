@@ -154,3 +154,32 @@ export async function getTodoIssueOwnerRepo(owner: string, repo: string) {
         throw e
     }
 }
+
+export async function createComment(prevState: { message: string }, formData: FormData) {
+
+    const fields = {
+        owner: formData.get("owner"),
+        repo: formData.get("repo"),
+        issueNumber: formData.get("issueNumber")
+    }
+
+    const { owner, repo, issueNumber } = fields
+
+    try{
+        const comment = await fetchWrapper(`/repos/${owner}/${repo}/issues/${issueNumber}/comments`, {
+            method: "POST",
+            body: JSON.stringify({
+                body: "- [ ] タスク"
+            })
+        })
+        console.log(comment)
+    }catch(e){
+        console.error(e)
+        return {
+            message: "コメントの作成に失敗しました"
+        }
+    }
+
+    revalidatePath(`/dashboard/${owner}/${repo}`)
+    redirect(`/dashboard/${owner}/${repo}`)
+}

@@ -15,10 +15,16 @@ export default auth(async (req: NextRequest) => {
   }
 
   //　ユーザーがこのサービスに登録しているかを確認するAPI
-  const res = await fetch("http://localhost:3001/api/user/registered", {
+  const res = await fetch("http://localhost:3000/api/user/registered", {
     method: "POST",
     body: JSON.stringify({ id: session.user?.id, name: session.user?.name })
   })
+
+  // prismaでの接続ができなかったりした時のリダイレクト
+  if(!res.ok){
+    return NextResponse.redirect(new URL("/", req.url))
+  }
+
   const data = await res.json()
 
   const { registered } = data
