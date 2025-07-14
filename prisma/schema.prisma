@@ -27,7 +27,7 @@ model TodoIssue {
   repo String
   issuesNumber Int
 
-  @@id([owner, repo, issuesNumber])
+  @@id([owner, repo])
 
   userName String
   userId String
