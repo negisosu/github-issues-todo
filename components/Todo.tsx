@@ -1,7 +1,7 @@
 import { getRepo, getTodoIssueOwnerRepo } from "@/lib/actions"
 import { fetchWrapper } from "@/lib/fetchWrapper"
 import { Comments } from "@/lib/types"
-import { notFound, redirect } from "next/navigation"
+import { notFound } from "next/navigation"
 import { MyTitle } from "./myTemplates/MyTitle"
 import { TodoSec } from "./TodoSec"
 import { TodoAddCommentButton } from "./TodoAddCommentButton"
@@ -27,18 +27,15 @@ export async function Todo({ owner, repo }: { owner: string, repo: string }) {
 
     const data: Comments = await res.json()
 
+    console.log(data.length == 0)
+
     if(!data[0]){
-        const resp = await fetchWrapper(`/repos/${owner}/${repo}/issues/${todoIssue.issuesNumber}/comments`, {
+        await fetchWrapper(`/repos/${owner}/${repo}/issues/${todoIssue.issuesNumber}/comments`, {
             method: "POST",
             body: JSON.stringify({
                 body: "- [ ] タスク"
             })
         })
-
-        const data = await resp.json()
-
-        console.log(data)
-        redirect(`/dashboard/${owner}/${repo}`)
     }
 
     return(

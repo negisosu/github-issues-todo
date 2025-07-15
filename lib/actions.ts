@@ -240,6 +240,13 @@ export async function createIssueTODO(prevState: createIssueState, formData: For
 
         const data: Issue = await res.json()
 
+        await fetchWrapper(`/repos/${owner}/${repo}/issues/${data.number}/comment`, {
+            method: "POST",
+            body: JSON.stringify({
+                body: "- [ ] タスク"
+            })
+        })
+
         // TODOの判定用作成
         await prisma.todoIssue.create({
             data: {
