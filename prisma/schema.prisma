@@ -29,10 +29,8 @@ model TodoIssue {
 
   @@id([owner, repo])
 
-  userName String
   userId String
 
-  user User @relation(references: [githubId, githubName], fields: [userId, userName])
-  
+  user User @relation(references: [githubId, githubName], fields: [userId, owner])
 }
 
