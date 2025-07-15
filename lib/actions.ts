@@ -44,6 +44,23 @@ export async function getRepo(owner: string, repo: string): Promise<Repo>{
     }
 }
 
+export async function getAllIssues() {
+
+    const session = await auth()
+
+    try{
+        const todoIssues = await prisma.todoIssue.findMany({
+            where: {
+                userId: String(session?.user?.id)
+            }
+        })
+        return todoIssues
+    }catch(e){
+        console.error(e)
+        throw e
+    }
+}
+
 // ユーザーがアクセスできる指定されたリポジトリのIssuesの一覧を取得
 export async function getIssues(repo: string): Promise<Issues> {
 
