@@ -20,6 +20,7 @@ model User {
   @@id([githubName, githubId])
 
   todoIssues TodoIssue[]
+  favorite Favorite?
 }
 
 model TodoIssue {
@@ -29,10 +30,21 @@ model TodoIssue {
 
   @@id([owner, repo])
 
-  userName String
   userId String
 
+  user User @relation(references: [githubId, githubName], fields: [userId, owner])
+  favorite Favorite?
+}
+
+model Favorite {
+  userId String
+  userName String
+  repoName String
+  @@id([userId, userName])
+  @@unique([repoName, userName])
   user User @relation(references: [githubId, githubName], fields: [userId, userName])
+  todoIssue TodoIssue @relation(references: [repo, owner], fields: [repoName, userName])
+
   
 }
 

@@ -22,3 +22,22 @@ export type createIssueState = {
     errors?: createIssueErrors;
     message?: string;
 }
+
+export const SelectIssue = z.object({
+    owner: z.string(),
+    repo: z.string(),
+    issuesNumber: z.number()
+})
+
+export type selectIssueType = z.infer<typeof SelectIssue>
+
+export type selectIssueKeys = keyof selectIssueType
+
+export type selectIssueErrors = {
+    [K in selectIssueKeys]?: string[]
+}
+
+export type selectIssueState = {
+    errors?: selectIssueErrors;
+    message?: string;
+}
