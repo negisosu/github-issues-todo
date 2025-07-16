@@ -17,7 +17,7 @@ export async function GitHubButton() {
                         あなたのGitHubページ
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="w-full flex items-center justify-center">
+                <CardContent className="w-full h-full flex items-center justify-center">
                         <Github className="w-2/3 h-2/3"/>
                 </CardContent>
             </Card>

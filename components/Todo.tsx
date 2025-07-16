@@ -1,11 +1,13 @@
 import { getRepo, getTodoIssueOwnerRepo } from "@/lib/actions"
 import { fetchWrapper } from "@/lib/fetchWrapper"
 import { Comments } from "@/lib/types"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { MyTitle } from "./myTemplates/MyTitle"
 import { TodoSec } from "./TodoSec"
 import { TodoAddCommentButton } from "./TodoAddCommentButton"
 import { TodoNewIssue } from "./TodoNewIssue"
+import { Ellipsis } from "lucide-react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
 
 export async function Todo({ owner, repo }: { owner: string, repo: string }) {
 
@@ -36,13 +38,38 @@ export async function Todo({ owner, repo }: { owner: string, repo: string }) {
                 body: "- [ ] タスク"
             })
         })
+        redirect(`/dashboard/${owner}/${repo}`)
     }
 
     return(
-        <div className="w-full min-h-screen flex flex-col items-center bg-muted/50 px-4 py-4 sm:px-8 space-y-4">
+        <div className="w-full min-h-screen flex flex-col items-center px-4 py-4 sm:px-8 space-y-4">
             <MyTitle>
                 {repo}のTODOリスト
             </MyTitle>
+            <div className="min-w-3xl flex justify-end">
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Ellipsis className="w-10 h-10 hover:bg-neutral-200 rounded-full"/>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        <DropdownMenuGroup>
+                            <div className="text-center p-2">
+                                {repo}
+                            </div>
+                            <DropdownMenuItem>
+                                <div
+                                className="text-red-500"
+                                onClick={() => {
+                                    
+                                }}
+                                >
+                                    このTODOを削除
+                                </div>
+                            </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </div>
             {data.map((comment, i) => {
                 return(
                     <div key={comment.id}>
