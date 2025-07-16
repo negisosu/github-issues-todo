@@ -329,3 +329,23 @@ export async function selectIssueTODO(prevState: selectIssueState, formData: For
     revalidatePath(`/dashboard/${owner}/${repo}`)
     redirect(`/dashboard/${owner}/${repo}`)
 }
+
+export async function deleteTodoIssue(owner: string, repo: string) {
+    console.log(owner, repo)
+    try{
+        await prisma.todoIssue.delete({
+            where: {
+                owner_repo: {
+                    owner: owner,
+                    repo: repo
+                }
+            }
+        })
+    }catch(e){
+        console.error(e)
+        throw e
+    }
+
+    revalidatePath("/dashboard")
+    redirect("/dashboard")
+}

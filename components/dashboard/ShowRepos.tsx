@@ -56,7 +56,7 @@ export async function ShowRepos() {
                                                 {repo.name}
                                             </Link>
                                         </TableCell>
-                                        <TableCell className="text-center text-blue-400 hover:text-blue-500 hover:underline">
+                                        <TableCell className="text-center text-blue-400 hover:text-blue-500 text-xs hover:underline">
                                             <Link href={`/dashboard/${repo.owner.login}/${repo.name}`}>
                                                 TODOを作成する→
                                             </Link>

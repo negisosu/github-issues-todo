@@ -8,6 +8,8 @@ import { TodoAddCommentButton } from "./TodoAddCommentButton"
 import { TodoNewIssue } from "./TodoNewIssue"
 import { Ellipsis } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
+import { TodoDeleteItem } from "./TodoDeleteItem"
+import { prisma } from "@/lib/prisma"
 
 export async function Todo({ owner, repo }: { owner: string, repo: string }) {
 
@@ -29,7 +31,19 @@ export async function Todo({ owner, repo }: { owner: string, repo: string }) {
 
     const data: Comments = await res.json()
 
-    console.log(data.length == 0)
+    console.log(data)
+
+    if (!Array.isArray(data) && (data as any).message === 'Not Found') {
+        await prisma.todoIssue.delete({
+            where: {
+                owner_repo: {
+                    owner: owner,
+                    repo: repo
+                }
+            }
+        })
+        redirect(`/dashboard/${owner}/${repo}`)
+    }
 
     if(!data[0]){
         await fetchWrapper(`/repos/${owner}/${repo}/issues/${todoIssue.issuesNumber}/comments`, {
@@ -46,7 +60,7 @@ export async function Todo({ owner, repo }: { owner: string, repo: string }) {
             <MyTitle>
                 {repo}のTODOリスト
             </MyTitle>
-            <div className="min-w-3xl flex justify-end">
+            <div className="w-full max-w-3xl flex justify-end">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Ellipsis className="w-10 h-10 hover:bg-neutral-200 rounded-full"/>
@@ -57,14 +71,7 @@ export async function Todo({ owner, repo }: { owner: string, repo: string }) {
                                 {repo}
                             </div>
                             <DropdownMenuItem>
-                                <div
-                                className="text-red-500"
-                                onClick={() => {
-                                    
-                                }}
-                                >
-                                    このTODOを削除
-                                </div>
+                                <TodoDeleteItem owner={owner} repo={repo}/>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                     </DropdownMenuContent>
