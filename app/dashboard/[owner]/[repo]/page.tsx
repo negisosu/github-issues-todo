@@ -1,12 +1,12 @@
 import { ReturnDashboard } from "@/components/ReturnDashboard";
 import { RoughLoading } from "@/components/RoughLoading";
 import { Todo } from "@/components/Todo";
-import { SearchParams } from "next/dist/server/request/search-params";
 import { Suspense } from "react";
 
-export default async function Page({ params }: { params: SearchParams }) {
+export default async function Page({params}: {params: Promise<{ [key: string]: string}>}) {
 
-    const { owner, repo } = (await params)
+    const { owner } = await params
+    const { repo } = await params
 
     return(
         <div className="bg-muted/50">
