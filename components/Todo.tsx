@@ -33,6 +33,7 @@ export async function Todo({ owner, repo }: { owner: string, repo: string }) {
 
     console.log(data)
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (!Array.isArray(data) && (data as any).message === 'Not Found') {
         await prisma.todoIssue.delete({
             where: {
