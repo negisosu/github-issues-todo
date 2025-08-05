@@ -15,7 +15,7 @@ export default auth(async (req: NextRequest) => {
   }
 
   //　ユーザーがこのサービスに登録しているかを確認するAPI
-  const res = await fetch("http://localhost:3000/api/user/registered", {
+  const res = await fetch(`${process.env.MY_DOMAIN}/api/user/registered`, {
     method: "POST",
     body: JSON.stringify({ id: session.user?.id, name: session.user?.name })
   })
